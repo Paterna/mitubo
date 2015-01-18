@@ -3,7 +3,7 @@
 ## Puesta en marcha
 
 ```
-~$ git clone <url>
+~$ git clone https://github.com/Paterna/mitubo.git
 ~$ npm install
 ```
 
