@@ -1,5 +1,6 @@
 <div id="main-wrapper" class="col-sm-12 col-md-4">
-	<form method="post" action="/users">
+	<h1 class="title">Nuevo usuario</h1>
+	<form method="post" action="/registro">
 		<div class="form-group">
 			<label>Nombre</label>
 			<input name="name" type="text" class="form-control" id="name">
@@ -18,7 +19,4 @@
 		</div>
 		<button type="submit" class="btn btn-default">Registrar</button>
 	</form>
-	<% if (error) { %>
-		<span class="alert alert-danger">Datos incorrectos.</span>
-	<% } %>
 </div>

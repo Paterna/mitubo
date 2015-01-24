@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var models = require('./models');
+var controllers = require('./controllers/index');
+var userCtrl = require('./controllers/users');
 // var schemas = require('./models/schemas');
 
 // var db = mongoose.connection;
@@ -30,8 +31,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
 
+// app.use(controllers.index);
+app.use(userCtrl.getUsers);
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -39,6 +41,12 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+// app.use(function(req, res, next) {
+//    // Hacer visible req.session en las vistas
+//    res.locals.user = req.user;
+//    next();
+// });
 
 // error handlers
 

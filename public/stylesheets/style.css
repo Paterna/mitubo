@@ -1,8 +1,8 @@
-body {
+/*body {
 	padding: 0px;
 	margin: 0px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+}*/
 
 
 #main-menu {
@@ -11,7 +11,12 @@ body {
 	background: linear-gradient(#f13852, #d11832);
 	color: #f9f9f9;
 	border-radius: 3px;
-	box-shadow: #444 0em 0.1em 0.3em;
+	/*box-shadow: #444 0em 0.1em 0.3em;*/
+}
+
+#main-menu ul {
+	margin: 0;
+	padding: 0px;
 }
 
 #main-menu ul li {
@@ -19,6 +24,31 @@ body {
 	list-style: none;
 }
 
-#main-menu a {
+#main-menu ul li a {
+	font-size: 1.4em;
+	padding: 8px;
+	border-radius: 3px;
 	color: #fff;
+}
+
+#main-menu ul li a:hover {
+	text-decoration: none;
+	background: #ff4660;
+}
+
+#logo {
+	margin: 0px 10px 0px 10px;
+	font-family: 'Lobster';
+	font-size: 2.3em;
+	text-shadow: #000 0.1em 0.1em 0.1em;
+}
+
+.title {
+	padding: 5px;
+	margin-bottom: 30px;
+	border-bottom: 2px solid #d11832;
+}
+
+#home {
+	/*font-size: 1.5em;*/
 }
