@@ -1,22 +1,74 @@
-<div id="main-wrapper" class="col-sm-12 col-md-4">
-	<h1 class="title">Nuevo usuario</h1>
-	<form method="post" action="/registro">
-		<div class="form-group">
-			<label>Nombre</label>
-			<input name="name" type="text" class="form-control" id="name">
-		</div>
-		<div class="form-group">
-			<label>Email</label>
-			<input name="email" type="text" class="form-control" id="email">
-		</div>
-		<div class="form-group">
-			<label>Contraseña</label>
-			<input name="pwd1" type="password" class="form-control" id="pwd1">
-		</div>
-		<div class="form-group">
-			<label>Confirmar contraseña</label>
-			<input name="pwd2" type="password" class="form-control" id="pwd2">
-		</div>
-		<button type="submit" class="btn btn-default">Registrar</button>
-	</form>
+<script>
+    function validateRegistration() {
+        var name = document.getElementById('name');
+        var email = document.getElementById('email');
+        var pwd1 = document.getElementById('pwd1');
+        var pwd2 = document.getElementById('pwd2');
+        var errorAlert = document.getElementById('error-alert');
+
+        var valid = false;
+
+        if (!((typeof name.value == 'string' || name.value instanceof String) && name.value.length > 0)) {
+            name.style.border = "1px solid red";
+            errorAlert.style.display = "block";
+            errorAlert.innerHTML = "Introduzca un nombre de usuario válido."
+        }
+        else {
+            name.style.border = "1px solid #ccc";
+            if (!(/^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}$/.test(email.value))) {
+                email.style.border = "1px solid red";
+                errorAlert.style.display = "block";
+                errorAlert.innerHTML = "Introduzca una dirección de correo válida."
+            }
+            else {
+                email.style.border = "1px solid #ccc";
+                if (pwd1.value.length < 5 || pwd1.value.length > 10) {
+                    pwd1.style.border = "1px solid red";
+                    errorAlert.style.display = "block";
+                    errorAlert.innerHTML = "La contraseña debe contener más de cinco caracteres y menos de diez."
+                }
+                else {
+                    pwd1.style.border = "1px solid #ccc";
+                    if (pwd2.value != pwd1.value) {
+                        pwd2.style.border = "1px solid red";
+                        errorAlert.style.display = "block";
+                        errorAlert.innerHTML = "Las contraseñas no coinciden."
+                    }
+                    else {
+                        pwd1.style.border = "1px solid #ccc";
+                        errorAlert.style.display = "none";
+                        valid = true;
+                    }
+                }
+            }
+        }
+        return valid;
+    }
+</script>
+<div id="main-wrapper" class="col-md-10">
+    <h1 class="title">Nuevo usuario</h1>
+    <div class="col-sm-12 col-md-10 alert-wrapper">
+        <span id="error-alert" class="alert alert-danger"></span>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <form method="post" action="/registro">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input name="name" type="text" class="form-control" id="name" />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input name="email" type="text" class="form-control" id="email" />
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input name="pwd1" type="password" class="form-control" id="pwd1" />
+            </div>
+            <div class="form-group">
+                <label>Confirmar contraseña</label>
+                <input name="pwd2" type="password" class="form-control" id="pwd2" />
+            </div>
+            <input onclick="return validateRegistration()" type="submit" class="btn btn-default" value="Registrar" />
+        </form>
+    </div>
 </div>

@@ -4,6 +4,13 @@
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }*/
 
+.alert-wrapper {
+	margin-bottom: 25px;
+}
+
+#error-alert {
+	display: none;
+}
 
 #main-menu {
 	margin: 10px 0px 20px 0px;
