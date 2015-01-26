@@ -1,25 +1,34 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 var usersCtrl = require('../controllers/users');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	res.render('index');
+    res.render('index');
 });
 
 router.get('/registro', usersCtrl.new);
 router.post('/registro', usersCtrl.create, function(req, res) {
-	res.redirect('/destacados');
+    res.redirect('/destacados');
 });
 
 router.get('/login', usersCtrl.newLogin);
-router.post('/login', usersCtrl.login, function(req, res) {
-	res.redirect('/destacados');
-});
+// router.post('/login', usersCtrl.login, function(req, res) {
+//     res.render('videos');
+// });
+
+router.post('/login', passport.authenticate('local',
+    {
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true
+    })
+);
 
 router.get('/destacados', function(req, res) {
-	res.render('videos');
+    res.render('videos');
 })
 
 module.exports = router;

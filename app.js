@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var models = require('./models');
@@ -30,8 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
+app.use(passport.initialize());
+app.use(passport.session());
 
-// app.use(controllers.index);
+app.use(controllers.index);
 app.use(userCtrl.getUsers);
 app.use('/', routes);
 
