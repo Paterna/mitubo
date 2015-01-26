@@ -9,7 +9,7 @@ var passport = require('passport');
 
 var routes = require('./routes/index');
 var models = require('./models');
-var controllers = require('./controllers/index');
+var ctrl = require('./controllers/index');
 var userCtrl = require('./controllers/users');
 // var schemas = require('./models/schemas');
 
@@ -34,7 +34,7 @@ app.use(expressLayouts);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(controllers.index);
+app.use(ctrl.init);
 app.use(userCtrl.getUsers);
 app.use('/', routes);
 

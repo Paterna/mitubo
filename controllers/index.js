@@ -3,7 +3,11 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var models = require('../models');
 
-passport.use(new LocalStrategy({
+exports.init = function(req, res, next) {
+	res.locals.user = req.user || {};
+	console.log('Req.user: %s', req.user);
+
+	passport.use(new LocalStrategy({
 		usernameField: 'email',
     	passwordField: 'pwd'
 	},
@@ -13,18 +17,15 @@ passport.use(new LocalStrategy({
 				return done(null, user);
 			});
 	}
-));
+	));
 
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
+	passport.serializeUser(function(user, done) {
+		done(null, user);
+	});
 
-passport.deserializeUser(function(user, done) {
-	done(null, user);
-});
+	passport.deserializeUser(function(user, done) {
+		done(null, user);
+	});
 
-exports.index = function(req, res, next) {
-	res.locals.user = req.user || {};
-	console.log('Req.user: %s', req.user);
 	next();
 }
