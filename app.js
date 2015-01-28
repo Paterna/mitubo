@@ -11,11 +11,6 @@ var routes = require('./routes/index');
 var models = require('./models');
 var ctrl = require('./controllers/index');
 var userCtrl = require('./controllers/users');
-// var schemas = require('./models/schemas');
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() { console.log('Database connected.')});
 
 var app = express();
 
