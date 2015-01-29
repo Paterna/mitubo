@@ -32,9 +32,7 @@ router.get('/favourites', function(req, res) {
     res.render('videos');
 })
 
-router.get('/upload', function(req, res) {
-	res.render('upload');
-});
+router.get('/upload', videoCtrl.view);
 router.post('/upload', videoCtrl.upload, function(req, res) {
 	res.redirect('/favourites');
 });

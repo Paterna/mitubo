@@ -36,21 +36,16 @@ exports.create = function(req, res, next) {
 
         user.save(function(err, user) {
             if (err)
-                res.json({ code: 1, msg: err});
+                return res.send(err);
             else {
                 console.log('Nuevo usuario: ' + user);
-                res.locals.user = {
-                    name: user.name,
-                    email: user.email,
-                    password: user.password
-                };
+                res.locals.user = user;
                 next();
             }
         });
     }
     else {
-
-        res.json({ code: 2, msg: 'Campos no válidos.'});
+        res.send();
     }
 }
 
