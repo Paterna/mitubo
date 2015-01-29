@@ -4,11 +4,7 @@ var Schema = mongoose.Schema;
 module.exports = function(req, res) {
 
 	var video = new Schema({
-		name: String,
-		location: String,
-		type: String,
-		duration: Number,
-
+		name: String
 	});
 
 	var Video = mongoose.model('Video', video);

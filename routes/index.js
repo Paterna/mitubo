@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 
 var usersCtrl = require('../controllers/users');
+var videoCtrl = require('../controllers/video');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -11,7 +12,7 @@ router.get('/', function(req, res) {
 
 router.get('/registro', usersCtrl.new);
 router.post('/registro', usersCtrl.create, function(req, res) {
-    res.redirect('/destacados');
+    res.redirect('/favourites');
 });
 
 router.get('/login', usersCtrl.newLogin);
@@ -27,8 +28,15 @@ router.post('/login', passport.authenticate('local',
     })
 );
 
-router.get('/destacados', function(req, res) {
+router.get('/favourites', function(req, res) {
     res.render('videos');
 })
+
+router.get('/upload', function(req, res) {
+	res.render('upload');
+});
+router.post('/upload', videoCtrl.upload, function(req, res) {
+	res.redirect('/favourites');
+});
 
 module.exports = router;
