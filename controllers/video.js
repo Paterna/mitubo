@@ -1,6 +1,8 @@
 var busboy = require('connect-busboy');
 var fs = require('fs');
 var models = require('../models');
+var child_process = require('child_process');
+var exec = child_process.exec;
 
 exports.view = function(req, res) {
     res.render('upload');
@@ -11,6 +13,7 @@ exports.upload = function(req, res, next) {
 	
     var video_name = req.body.nombre;
     // console.log('Nombre del vídeo: ' + video_name);
+    var child;
 
 	var fstream;
     req.pipe(req.busboy);
@@ -37,7 +40,10 @@ exports.upload = function(req, res, next) {
             console.log('Extensión: %s', res.locals.extension);
 
             video_name = video_file._id + filename
-            fstream = fs.createWriteStream('/mnt/nas/' + video_file._id + "." + video_extension[2]);
+            fstream = fs.createWriteStream('/root/tmp/' + video_file._id + "." + video_extension[2]);
+            
+            var command = 'scp /root/tmp/' + video_file._id + '.' + video_extension[2] + ' root@s1:/mnt/nas/ &> /root/tmp/error.log';
+            child = exec(command, function(error, stdout, stderr) {});
 	        file.pipe(fstream);
 	        fstream.on('close', function () {});
             next();
