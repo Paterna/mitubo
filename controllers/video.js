@@ -32,7 +32,12 @@ exports.upload = function(req, res, next) {
             res.locals.video = {
                 name: video.name
             };
-            fstream = fs.createWriteStream('/mnt/nas/' + video_file._id);
+            extension_check = /(.*)\.(.*)/;
+            var video_extension = extension_check.exec(filename);
+            console.log('Extensión: ' + video_extension[2]);
+
+            video_name = video_file._id + filename
+            fstream = fs.createWriteStream('/mnt/nas/' + video_file._id + "." + video_extension[2]);
 	        file.pipe(fstream);
 	        fstream.on('close', function () {});
             next();
