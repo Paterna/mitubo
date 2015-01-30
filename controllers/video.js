@@ -32,11 +32,9 @@ exports.upload = function(req, res, next) {
             res.locals.video = {
                 name: video.name
             };
-            fstream = fs.createWriteStream('/home/roberto/mitubo/videos/' + filename);
+            fstream = fs.createWriteStream('/mnt/nas/' + filename);
 	        file.pipe(fstream);
-	        fstream.on('close', function () {
-	            
-	        });
+	        fstream.on('close', function () {});
             next();
 		});
         
