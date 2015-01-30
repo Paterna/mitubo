@@ -28,10 +28,7 @@ exports.upload = function(req, res, next) {
                 return res.end(err);
             }
             console.log('Vídeo subido: ' + JSON.stringify(video));
-            res.locals.video = {
-                _id: video._id,
-                name: video.name
-            };
+            res.locals.video = video;
             extension_check = /(.*)\.(.*)/;
             var video_extension = extension_check.exec(filename);
             res.locals.extension = video_extension[2];
