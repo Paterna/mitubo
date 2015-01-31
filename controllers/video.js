@@ -44,9 +44,9 @@ exports.upload = function(req, res, next) {
             console.log('Extensión: %s', res.locals.extension);
 
             video_name = video_file._id + filename
-            fstream = fs.createWriteStream('/root/tmp/' + video_file._id + "." + video_extension);
+            fstream = fs.createWriteStream('/root/mitubo/videos/' + video_file._id + "." + video_extension);
             
-            var command = 'scp /root/tmp/' + video_file._id + '.' + video_extension + ' root@s1:/mnt/nas/ &> /root/tmp/error.log';
+            var command = 'scp /root/mitubo/videos/' + video_file._id + '.' + video_extension + ' root@s1:/mnt/nas/ &> /root/mitubo/videos/error.log';
             child = exec(command, function(error, stdout, stderr) {});
 	        file.pipe(fstream);
 	        fstream.on('close', function () {});
@@ -88,7 +88,7 @@ exports.play = function(req, res, next) {
             }
             res.locals.video = video[0];
             console.log("Vídeo para reproducir: %s", res.locals.video);
-            var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/tmp &> /root/tmp/error.log';
+            var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/tmp &> /root/mitubo/videos/error.log';
             child = exec(command, function(error, stdout, stderr) {});
             next();
         });
