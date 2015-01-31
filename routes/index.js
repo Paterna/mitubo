@@ -40,7 +40,7 @@ router.post('/upload', videoCtrl.upload, function(req, res) {
 router.get('/list', videoCtrl.list, function(req, res) {
 	res.render('list');
 });
-router.get('/videos/:id', videoCtrl.play, function(req, res) {
+router.get('/video/:id', videoCtrl.play, function(req, res) {
 	res.render('play');
 });
 
