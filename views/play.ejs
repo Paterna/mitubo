@@ -1,8 +1,8 @@
 <div id="main-wrapper" class="col-sm-12 col-md-4">
-	<h1 class="title">Inicio</h1>
+	<h1 class="title"><%- video.name %></h1>
 	<video controls>
 		<!-- <source src="movie.mp4" type="video/mp4"> -->
-		<source src="http://10.250.0.214/mnt/nas/<%= video._id %>.<%= extension %>" type="video/ogg">
+		<source src="/root/tmp/<%- video._id%>.<%- video.extension %>" type="video/ogg">
 		Your browser does not support the video tag.
 	</video>
 </div>

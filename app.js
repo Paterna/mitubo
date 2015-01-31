@@ -28,8 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '/')));
 
-app.use(ctrl.init);
-app.use(userCtrl.getUsers);
+// app.use(ctrl.init);
 app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -38,12 +37,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// app.use(function(req, res, next) {
-//    // Hacer visible req.session en las vistas
-//    res.locals.user = req.user;
-//    next();
-// });
 
 // error handlers
 

@@ -1,0 +1,15 @@
+<div id="main-wrapper" class="col-sm-12 col-md-4">
+	<h1 class="title">Lista de vídeos</h1>
+	<% if(!videos || videos.length == 0) { %>
+		<span class="alert alert-info">No se han encontrado vídeos.</span>
+	<% } else { %>
+		<span class="alert alert-info">Se han encontrado <%= videos.length %> vídeos.</span>
+		<table class="table" style="margin-top:30px">
+			<% for (var i = 0 ; i < videos.length ; i++) { %>
+			<tr>
+				<td><a href="/videos/<%= videos[i]._id %>"><%= videos[i]._id %></a></td>
+			</tr>	
+			<% } %>
+		</table>
+	<% } %>
+</div>

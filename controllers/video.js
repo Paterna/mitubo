@@ -12,17 +12,22 @@ exports.view = function(req, res) {
 exports.upload = function(req, res, next) {
 	
     var video_name = req.body.nombre;
-    // console.log('Nombre del vídeo: ' + video_name);
+    res.locals.video;
+    res.locals.extension;
     var child;
+    var fstream;
 
-	var fstream;
     req.pipe(req.busboy);
 
     req.busboy.on('file', function (fieldname, file, filename) {
         console.log("Subiendo vídeo: " + filename);
 
+        var video_extension = /(.*)\.(.*)/.exec(filename)[2];
+        console.log('Nombre del vídeo: ' + video_name);
+        console.log('Extensión del vídeo: ' + video_extension);
         var video = new models.Video({
-			name: video_name
+			name: video_name,
+            extension: video_extension
 		});
 
 		video.save(function(err, video_file) {
@@ -32,17 +37,16 @@ exports.upload = function(req, res, next) {
             }
             console.log('Vídeo subido: ' + JSON.stringify(video));
             res.locals.video = video;
-            extension_check = /(.*)\.(.*)/;
-            var video_extension = extension_check.exec(filename);
-            res.locals.extension = video_extension[2];
+            
+            res.locals.extension = video_extension;
 
             console.log('Vídeo: %s', JSON.stringify(res.locals.video));
             console.log('Extensión: %s', res.locals.extension);
 
             video_name = video_file._id + filename
-            fstream = fs.createWriteStream('/root/tmp/' + video_file._id + "." + video_extension[2]);
+            fstream = fs.createWriteStream('/root/tmp/' + video_file._id + "." + video_extension);
             
-            var command = 'scp /root/tmp/' + video_file._id + '.' + video_extension[2] + ' root@s1:/mnt/nas/ &> /root/tmp/error.log';
+            var command = 'scp /root/tmp/' + video_file._id + '.' + video_extension + ' root@s1:/mnt/nas/ &> /root/tmp/error.log';
             child = exec(command, function(error, stdout, stderr) {});
 	        file.pipe(fstream);
 	        fstream.on('close', function () {});
@@ -50,4 +54,42 @@ exports.upload = function(req, res, next) {
 		});
         
     });
+}
+
+exports.list = function(req, res, next) {
+
+    res.locals.videos = [];
+
+    models.Video.find({},
+        function(err, videos) {
+            if (err) {
+                console.log("Error: %s", err);
+            }
+            else {
+                console.log('Vídeos en lista: %s', JSON.stringify(videos));
+                res.locals.videos = videos;
+                console.log(res.locals.videos);
+                next();
+            }
+        });
+}
+
+exports.play = function(req, res, next) {
+
+    res.locals.video;
+    var video_id = req.params.id;
+    var child;
+
+
+    models.Video.find({ _id: video_id },
+        function(err, video) {
+            if (err) {
+                console.log("Error: %s", err);
+            }
+            res.locals.video = video[0];
+            console.log("Vídeo para reproducir: %s", res.locals.video);
+            var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/tmp &> /root/tmp/error.log';
+            child = exec(command, function(error, stdout, stderr) {});
+            next();
+        });
 }

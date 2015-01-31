@@ -10,6 +10,7 @@ exports.newLogin = function(req, res) {
 
 exports.create = function(req, res, next) {
 
+    res.locals.user;
     var user_name = req.body.name;
     var user_email = req.body.email;
     var pwd1 = req.body.pwd1;
@@ -49,14 +50,14 @@ exports.create = function(req, res, next) {
     }
 }
 
-exports.getUsers = function(req, res, next) {
-    var users = [];
-    models.User.find({},
-        function (err, users) {
-        users.push();
-    });
-    next();
-}
+// exports.getUsers = function(req, res, next) {
+//     var users = [];
+//     models.User.find({},
+//         function (err, users) {
+//         users.push();
+//     });
+//     next();
+// }
 
 // exports.login = function (req, res, next) {
 

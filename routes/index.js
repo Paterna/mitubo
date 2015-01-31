@@ -17,7 +17,7 @@ router.post('/registro', usersCtrl.create, function(req, res) {
 
 router.get('/login', usersCtrl.newLogin);
 // router.post('/login', usersCtrl.login, function(req, res) {
-//     res.render('videos');
+//     res.render('play');
 // });
 
 router.post('/login', passport.authenticate('local',
@@ -29,12 +29,19 @@ router.post('/login', passport.authenticate('local',
 );
 
 router.get('/favourites', function(req, res) {
-    res.render('videos');
+    res.render('index');
 })
 
 router.get('/upload', videoCtrl.view);
 router.post('/upload', videoCtrl.upload, function(req, res) {
-	res.render('videos');
+	res.render('play');
+});
+
+router.get('/list', videoCtrl.list, function(req, res) {
+	res.render('list');
+});
+router.get('/videos/:id', videoCtrl.play, function(req, res) {
+	res.render('play');
 });
 
 module.exports = router;
