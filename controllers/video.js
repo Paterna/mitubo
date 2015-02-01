@@ -51,6 +51,7 @@ exports.upload = function(req, res, next) {
                 child = exec(command, function(error, stdout, stderr) {
                     console.log('Vídeo subido al NAS: %s', command);
                 });
+                child = exec('rm /root/mitubo/videos/' + video_file._id + '.' + video_extension);
             });
                 
             next();
@@ -69,9 +70,7 @@ exports.list = function(req, res, next) {
                 console.log("Error: %s", err);
             }
             else {
-                console.log('Vídeos en lista: %s', JSON.stringify(videos));
                 res.locals.videos = videos;
-                console.log(res.locals.videos);
                 next();
             }
         });
@@ -92,7 +91,9 @@ exports.play = function(req, res, next) {
             res.locals.video = video[0];
             console.log("Vídeo para reproducir: %s", res.locals.video);
             var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/mitubo/videos/';
-            child = exec(command, function(error, stdout, stderr) {});
+            child = exec(command, function(error, stdout, stderr) {
+                console.log('Vídeo descargado del NAS: %s', command);
+            });
             next();
         });
 }
