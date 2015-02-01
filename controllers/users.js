@@ -50,31 +50,25 @@ exports.create = function(req, res, next) {
     }
 }
 
-// exports.getUsers = function(req, res, next) {
-//     var users = [];
-//     models.User.find({},
-//         function (err, users) {
-//         users.push();
-//     });
-//     next();
-// }
-
-// exports.login = function (req, res, next) {
-
-//     var user_email = req.body.email;
-//     var user_pwd = req.body.pwd;
-
-//     res.locals.user = {};
-
-//     models.User.find({email: user_email, password: user_pwd},
-//         function (err, user) {
-//             if (err)
-//                 console.log('Error: %s', err);
-//             else {
-//                 res.locals.user = user[0];
-//                 console.log('User: %s', user);
-//                 console.log('Locals 2: %s', JSON.stringify(res.locals.user));    
-//                 next();
-//             }
-//         });
-// }
+exports.login = function(email, password, callback) {
+    
+    models.User.find({ email: email },
+        function(err, user) {
+            if (err) {
+                console.log('Error al buscar al usuario: %s', email);
+                next(err);
+            }
+            else {
+                if (user[0]) {
+                    if (user[0].password == password) {
+                        callback(null,user[0]);
+                        return;
+                    }
+                }
+                else {
+                    callback(new Error('Password erróneo.'));
+                    return;
+                }
+            }
+        });
+}; 

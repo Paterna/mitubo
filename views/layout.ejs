@@ -6,23 +6,21 @@
         <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
 
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-
     </head>
     <body>
         <div id="main-frame">
             <div id="main">
-                <div id="main-menu" class="col-md-2">
-                    <div class="menu-bar" id="menu-bar-1">
+                <div id="main-menu" class="col-md-12">
+                    <div class="menu-bar">
                         <ul>
-                            <li><span id="logo">mitubo</span></li><br>
-                        </ul>
-                    </div>
-                    <div class="menu-bar" id="menu-bar-2">
-                        <ul>
+                            <li><span id="logo">mitubo</span></li>
                             <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
-                            <li><a href="/favourites"><span class="glyphicon glyphicon-heart"></span></a></li>
+                            <% if(session.user) { %>
                             <li><a href="/upload"><span class="glyphicon glyphicon-upload"></span></a></li>
-                            <li><a href="/list"><span class="glyphicon glyphicon-list"></span></a></li>
+                            <li><a href="/videos/<%- session.user.id %>"><span class="glyphicon glyphicon-list"></span></a></li>
+                            <li><a href="/usuario/<%- session.user.id %>" class="pull-right"> <%- session.user.email %></a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                            <% } %>
                         </ul>
                     </div>
                 </div>

@@ -4,8 +4,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
-var passport = require('passport');
 var busboy = require('connect-busboy');
+var session = require('express-session');
+var MongoStore = require('connect-mongostore')(session);
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var models = require('./models');
@@ -13,6 +15,9 @@ var ctrl = require('./controllers/index');
 var userCtrl = require('./controllers/users');
 
 var app = express();
+
+// mongoose.connect('mongodb://localhost/mitubo');
+var db = mongoose.connection;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,11 +29,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(busboy());
 app.use(expressLayouts);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(session({
+        secret: 'vn23092n6nc13n517',
+        store: new MongoStore({ db: mongoose.connections[0].db }),
+        resave: false,
+        saveUninitialized: true
+    }));
 app.use(express.static(path.join(__dirname, '/')));
 
-// app.use(ctrl.init);
+app.use(function(req, res, next) {
+
+   // Hacer visible req.session en las vistas
+   res.locals.session = req.session;
+   res.locals.url = req.url;
+   next();
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -61,6 +77,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

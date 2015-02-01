@@ -1,5 +1,10 @@
 <div id="main-wrapper" class="col-sm-12 col-md-4">
 	<h1 class="title">Bienvenido a MiTubo</h1>
-	<a href="/login" class="btn btn-default">Iniciar sesión</a>
-	<a href="/registro" class="btn btn-default">Registrar</a>
+	<% if(!session.user) { %>
+		<a href="/login" class="btn btn-default">Iniciar sesión</a>
+		<a href="/registro" class="btn btn-default">Registrar</a>
+	<% } else { %>
+		<a href="/videos/<%- session.user.id %>" class="btn btn-default">Mis vídeos</a>
+		<a href="/usuario/<%- session.user.id %>" class="btn btn-default">Mi cuenta</a>
+	<% } %>
 </div>
