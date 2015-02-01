@@ -23,7 +23,7 @@ exports.upload = function(req, res, next) {
         console.log("Subiendo vídeo: " + filename);
 
         var video_extension = /(.*)\.(.*)/.exec(filename)[2];
-        console.log('Nombre del vídeo: ' + video_name);
+        console.log('Nombre del vídeo: ' + req.body.nombre);
         console.log('Extensión del vídeo: ' + video_extension);
         var video = new models.Video({
 			name: video_name,
@@ -43,13 +43,16 @@ exports.upload = function(req, res, next) {
             console.log('Vídeo: %s', JSON.stringify(res.locals.video));
             console.log('Extensión: %s', res.locals.extension);
 
-            video_name = video_file._id + filename
             fstream = fs.createWriteStream('/root/mitubo/videos/' + video_file._id + "." + video_extension);
-            
-            var command = 'scp /root/mitubo/videos/' + video_file._id + '.' + video_extension + ' root@s1:/mnt/nas/ &> /root/mitubo/videos/error.log';
-            child = exec(command, function(error, stdout, stderr) {});
-	        file.pipe(fstream);
-	        fstream.on('close', function () {});
+
+            file.pipe(fstream);
+            fstream.on('close', function () {
+                var command = 'scp /root/mitubo/videos/' + video_file._id + '.' + video_extension + ' root@s1:/mnt/nas/';
+                child = exec(command, function(error, stdout, stderr) {
+                    console.log('Vídeo subido al NAS: %s', command);
+                });
+            });
+                
             next();
 		});
         
@@ -88,7 +91,7 @@ exports.play = function(req, res, next) {
             }
             res.locals.video = video[0];
             console.log("Vídeo para reproducir: %s", res.locals.video);
-            var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/tmp &> /root/mitubo/videos/error.log';
+            var command = 'scp root@s1:/mnt/nas/' + video_id + '.' + video.extension + ' /root/mitubo/videos/';
             child = exec(command, function(error, stdout, stderr) {});
             next();
         });
