@@ -34,7 +34,7 @@ router.get('/favourites', function(req, res) {
 
 router.get('/upload', videoCtrl.view);
 router.post('/upload', videoCtrl.upload, function(req, res) {
-	res.render('succes-upload');
+	res.render('success-upload');
 });
 
 router.get('/list', videoCtrl.list, function(req, res) {
