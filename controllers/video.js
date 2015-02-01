@@ -51,7 +51,7 @@ exports.upload = function(req, res, next) {
                 child = exec(command, function(error, stdout, stderr) {
                     console.log('Vídeo subido al NAS: %s', command);
                 });
-                child = exec('rm /root/mitubo/videos/' + video_file._id + '.' + video_extension);
+                // child = exec('rm /root/mitubo/videos/' + video_file._id + '.' + video_extension);
             });
                 
             next();

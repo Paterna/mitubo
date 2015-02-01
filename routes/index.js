@@ -32,4 +32,7 @@ router.get('/video/:id', videoCtrl.play, function(req, res) {
 	res.render('play');
 });
 
+router.get('/*', function(req, res) {
+	res.render('error/404');
+})
 module.exports = router;
