@@ -1,22 +1,3 @@
-<script>
-    function validateUpload() {
-        var name = document.getElementById('name');
-        var errorAlert = document.getElementById('error-alert');
-
-        var valid = false;
-
-        if (!((typeof name.value == 'string' || name.value instanceof String) && name.value.length > 0)) {
-            name.style.border = "1px solid red";
-            errorAlert.style.display = "block";
-            errorAlert.innerHTML = "Introduzca un nombre para el vídeo."
-        }
-        else {
-            name.style.border = "1px solid #ccc";
-            valid = true;
-        }
-        return valid;
-    }
-</script>
 <div id="main-wrapper" class="col-sm-12 col-md-4">
     <h1 class="title">Subir vídeo</h1>
     <div class="col-sm-12 col-md-10 alert-wrapper">
@@ -25,13 +6,9 @@
     <div>
         <form method="post" action="/upload" enctype="multipart/form-data">
             <div class="form-group col-md-12">
-                <label>Nombre</label>
-                <input name="nombre" type="text" class="form-control" id="nombre" />
-            </div>
-            <div class="form-group col-md-12">
                 <input name="video" type="file" id="video" />
             </div>
-            <button onclick="return validateUpload()" class="btn btn-info" type="submit">Subir vídeo</button>
+            <button class="btn btn-info" type="submit">Subir vídeo</button>
         </form>
     </div>
 </div>

@@ -11,7 +11,6 @@ exports.view = function(req, res) {
 
 exports.upload = function(req, res, next) {
 	
-    var video_name = req.body.nombre;
     res.locals.video;
     res.locals.extension;
     var child;
@@ -26,7 +25,7 @@ exports.upload = function(req, res, next) {
         console.log('Nombre del vídeo: ' + req.body.nombre);
         console.log('Extensión del vídeo: ' + video_extension);
         var video = new models.Video({
-			name: video_name,
+			name: filename,
             extension: video_extension
 		});
 
